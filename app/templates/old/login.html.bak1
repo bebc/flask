@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form method="post">
+		Name:<br>
+		<input type="text" name="name">
+		<br>
+		Password:<br>
+		<input type="password" name="passwd">
+		<br><br>
+		<input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

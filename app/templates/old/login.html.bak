@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form method="post">
+	{{loginform.csrf_token}}
+		Name:<br>
+		{{loginform.name}}
+		<br>
+		Password:<br>
+		{{loginform.passwd}}
+		<br><br>
+		<input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

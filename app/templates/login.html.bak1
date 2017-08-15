@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form id="loginform">
+		Name:<br>
+		<input type="text" name="username">
+		<br>
+		Password:<br>
+		<input type="password" name="passwd">
+		<br><br>
+		<input type="button" value="Submit" id="ajaxbutton">
+</form>
+
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js">
+</script>
+<script type="text/javascript"> 
+$(document).ready(function() {
+		$("#ajaxbutton").click(function() {
+			var params = $("#loginform").serialize();
+			$.ajax({
+				type : "POST",
+				url : "/login",
+				data : params,
+				success: function(msg){
+					if (msg == "login"){
+						window.location.href = "/login";
+					}
+					if (msg=="not active"){
+						alert("fail!");
+					}
+				},
+			});
+		});
+	});
+
+</script>
+
+</body>
+</html>
