@@ -7,9 +7,9 @@ $(document).ready(function() {
                         data : params,
                         success: function(msg){
                              if (msg == "login"){
-				     window.location.href = "/login";
+				     window.location.href = "http://www.baidu.com";
 			     }
-       	                     if (msg=="not active"){
+       	                     if (msg == "not active"){
 				     alert("fail!");
 			     }
 			},

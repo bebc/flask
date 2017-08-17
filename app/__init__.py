@@ -2,7 +2,7 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask_migrate import Migrate,MigrateCommand
-from flask_script import Manager, Shell
+#from flask_script import Manager, Shell
 
 app = Flask(__name__)
 app.config.from_object('config')
