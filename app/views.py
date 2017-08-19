@@ -30,13 +30,18 @@ def login():
 		#user = User(name, password)
 		if user is not None and user.is_active and user.confirm_password(password):
 			login_user(user)
-			return "login"
+			return user.name
 
 		else:
 			return "not active"
 
 	#loginform = LoginForm()
 	return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+	logout_user()
+	return	render_template("index.html")
 
 @app.route('/api/tasks')
 def gettasks():
