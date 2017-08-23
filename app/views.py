@@ -4,7 +4,8 @@ from flask import render_template,redirect,url_for,request,session,g,jsonify
 from flask_login import login_required,login_user,logout_user,current_user
 from .models import User,Sys_info
 from .info import info
-
+from .user import userlogin
+'''
 @lm.user_loader
 def load_user(id):
 	return User.query.get(id)
@@ -12,13 +13,13 @@ def load_user(id):
 @app.before_request
 def before_request():
 	g.user = current_user
-
+'''
 
 @app.route('/')
 @app.route('/index')
 def index():
 	return render_template("index.html")
-
+'''
 @app.route('/login',methods = ['GET','POST'])
 def login():
     #if g.user is not None and g.user.is_authenticated:
@@ -43,7 +44,8 @@ def login():
 def logout():
 	logout_user()
 	return	render_template("index.html")
-
+'''
+app.register_blueprint(userlogin.user)
 app.register_blueprint(info.info)
 
 '''
