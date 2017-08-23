@@ -24,6 +24,7 @@ var TableInit = function () {
             sortable: false,                     
             sortOrder: "asc",                  
             queryParams: oTableInit.queryParams,
+			//dataField: "infolist", 服务端分页
             sidePagination: "client",           
             pageNumber:1,                       
             pageSize: 1,                       
@@ -60,15 +61,15 @@ var TableInit = function () {
         });
     };
 
-    
-   /* oTableInit.queryParams = function (params) {
+   /* 服务端分页传值 
+    oTableInit.queryParams = function (params) {
         var temp = {   
             limit: params.limit,   
             offset: params.offset,  
             
         };
         return temp;
-    }; */
+    }; */ 
     return oTableInit;
 };
 

@@ -1,8 +1,9 @@
 from app import app,lm
 from flask import render_template,redirect,url_for,request,session,g,jsonify
 #from .forms import LoginForm
-from flask.ext.login import login_required,login_user,logout_user,current_user
+from flask_login import login_required,login_user,logout_user,current_user
 from .models import User,Sys_info
+from .info import info
 
 @lm.user_loader
 def load_user(id):
@@ -43,16 +44,24 @@ def logout():
 	logout_user()
 	return	render_template("index.html")
 
+app.register_blueprint(info.info)
+
+'''
 @app.route("/api/info")
 def sysinfo():
 	sysinfo = Sys_info.query.all()
+	服务端分页代码
+	pagelimit = int(request.args.get('limit'))
+	pageoffset = int(request.args.get('offset'))+1
+	sysinfo = Sys_info.query.paginate(pageoffset,pagelimit,False).items
 	syscount = Sys_info.query.count()
-	#diccount = {"count":syscount}
 	infolist = []
 	for info in sysinfo:
-		infodic = {'id':info.id,'ip':info.ip,'sys':info.sys,'application':info.application,"count":syscount}
+		infodic = {'id':info.id,'ip':info.ip,'sys':info.sys,'application':info.application}
 		infolist.append(infodic)
+	#return jsonify({"total":syscount,"infolist":infolist}) 服务端分页返回格式
 	return jsonify(infolist)
+'''
 
 @app.route("/test1")
 def test1():
