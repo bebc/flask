@@ -2,7 +2,7 @@ from app import app,lm
 from flask import render_template,redirect,url_for,request,session,g,jsonify
 #from .forms import LoginForm
 from flask.ext.login import login_required,login_user,logout_user,current_user
-from .models import User
+from .models import User,Sys_info
 
 @lm.user_loader
 def load_user(id):
@@ -43,6 +43,21 @@ def logout():
 	logout_user()
 	return	render_template("index.html")
 
+@app.route("/api/info")
+def sysinfo():
+	sysinfo = Sys_info.query.all()
+	syscount = Sys_info.query.count()
+	#diccount = {"count":syscount}
+	infolist = []
+	for info in sysinfo:
+		infodic = {'id':info.id,'ip':info.ip,'sys':info.sys,'application':info.application,"count":syscount}
+		infolist.append(infodic)
+	return jsonify(infolist)
+
+@app.route("/test1")
+def test1():
+	return render_template("test1.html")
+
 @app.route('/api/tasks')
 def gettasks():
 	tasks = [
@@ -59,4 +74,4 @@ def gettasks():
 			'done': False
             }
 	]
-	return jsonify({'tasks':tasks})
+	return jsonify({"task":tasks})

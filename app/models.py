@@ -24,7 +24,7 @@ class User(db.Model,UserMixin):
 			return str(self.id)  # python 3
 
 	def __repr__(self):
-		return '<User %r' % (self.name)
+		return '<User %r>' % (self.name)
 
 	def __init__(self,name,password):
 		self.name = name
@@ -40,3 +40,12 @@ class User(db.Model,UserMixin):
 
 	def confirm_password(self,password):
 		return check_password_hash(self.hash_password,password)
+
+class Sys_info(db.Model):
+	id = db.Column(db.Integer,primary_key = True,autoincrement=True)
+	ip = db.Column(db.String(64),index=True,nullable=False)
+	sys = db.Column(db.String(512))
+	application = db.Column(db.String(64))
+
+	def __repr__(self):
+		return '<Ip %r>' % (self.ip)
