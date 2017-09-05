@@ -6,7 +6,8 @@ class User(db.Model,UserMixin):
 	id = db.Column(db.Integer,primary_key = True,autoincrement=True)
 	name = db.Column(db.String(64),index = True,nullable=False)
 	hash_password = db.Column(db.String(512),nullable=False)
-	email = db.Column(db.String(120),index = True)
+	email = db.Column(db.String(120))
+	department = db.Column(db.String(256))
 
 	def is_authenticated(self):
 		return True
@@ -26,9 +27,11 @@ class User(db.Model,UserMixin):
 	def __repr__(self):
 		return '<User %r>' % (self.name)
 
-	def __init__(self,name,password):
+	def __init__(self,name,password,email,department):
 		self.name = name
 		self.password = password
+		self.email = email
+		self.department = department
 
 	@property
 	def password(self):

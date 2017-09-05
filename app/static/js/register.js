@@ -54,12 +54,10 @@ function getParam(pname) {
 }  
 
 
-var reMethod = "GET",
+var reMethod = "POST",
 	pwdmin = 6;
 
 $(document).ready(function() {
-
-
 	$('#reg').click(function() {
 
 		if ($('#user').val() == "") {
@@ -71,8 +69,6 @@ $(document).ready(function() {
 			return false;
 		}
 
-
-
 		if ($('#user').val().length < 4 || $('#user').val().length > 16) {
 
 			$('#user').focus().css({
@@ -83,29 +79,6 @@ $(document).ready(function() {
 			return false;
 
 		}
-		$.ajax({
-			type: reMethod,
-			url: "/member/ajaxyz.php",
-			data: "uid=" + $("#user").val() + '&temp=' + new Date(),
-			dataType: 'html',
-			success: function(result) {
-
-				if (result.length > 2) {
-					$('#user').focus().css({
-						border: "1px solid red",
-						boxShadow: "0 0 2px red"
-					});$("#userCue").html(result);
-					return false;
-				} else {
-					$('#user').css({
-						border: "1px solid #D7D7D7",
-						boxShadow: "none"
-					});
-				}
-
-			}
-		});
-
 
 		if ($('#passwd').val().length < pwdmin) {
 			$('#passwd').focus();
@@ -118,23 +91,50 @@ $(document).ready(function() {
 			return false;
 		}
 
-		var email = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+		//var checkemail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+$/;
+		var checkemail = /^[0-9a-zA-Z]+@[0-9a-zA-Z]+[\.]{1}[0-9a-zA-Z]+[\.]?[0-9a-zA-Z]+$/;
 		if ($('#email').val() == "") {
 			$('#email').focus().css({
 				border: "1px solid red",
 				boxShadow: "0 0 2px red"
 			});
 			$('#userCue').html("<font color='red'><b>email不能为空</b></font>");return false;
-		} else if (!email.test($('#emial').val())){
+		} else if (!checkemail.test($('#email').val())){
 			$('#email').focus().css({
 				border: "1px solid red",
 				boxShadow: "0 0 2px red"
 			});
 			$('#userCue').html("<font color='red'><b>email格式不正确</b></font>");return false;
 		}
+		
+		if ($('#department').val() == "") {
+            $('#department').focus().css({
+                border: "1px solid red",
+                boxShadow: "0 0 2px red"
+            });
+            $('#userCue').html("<font color='red'><b>x部门不能为空</b></font>");
+            return false;
+        }
 
-		$('#regUser').submit();
+
+		//$('#regUser').submit();
+		var params = $("#regUser").serialize();
+		$.ajax({
+			type: reMethod,
+			url: "/user/register",
+			data: params,
+			success: function(result) {
+				if (result == "success") {
+					alert("addsuccess");
+				}
+				else if (result == "userexist") {
+					alert("userexist");
+				}
+				else if (result == "fail") {
+					alert("addfail");
+				}
+			},
+			});
+		});
 	});
-	
 
-});

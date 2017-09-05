@@ -4,7 +4,7 @@ $(document).ready(function() {
 		var username = $("#username").val();
 		$.ajax({
 			type : "POST",
-			url : "/login",
+			url : "/user/login",
 			data : params,
 			success: function(msg) {
 				if (msg == "john") {

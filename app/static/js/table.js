@@ -1,6 +1,7 @@
 $(function () {    
 	var oTable = new TableInit();
 	oTable.Init();
+	$('#tb_departments').bootstrapTable('hideColumn','id')
 
 	var oButtonInit = new ButtonInit();
 	oButtonInit.Init();
@@ -42,6 +43,9 @@ var TableInit = function () {
 			columns: [{
 				checkbox: true
 			}, {
+				field: 'id',
+				title: 'id',
+			},{
 				field: 'ip',
 				title: 'ip地址'
 			}, {
@@ -81,17 +85,17 @@ var ButtonInit = function () {
 };
 
 $('#add').click(function () {
-	var params = $('#addform').serialize();
-	var ip = $('#ip').val();
+	var addparams = $('#addform').serialize();
+	var ip = $('#addip').val();
 	if (ip == '') {
-        $("#error").html("* ip必须填写");
+        $("#adderror").html("* ip必须填写");
         return ;
     }
 
     $.ajax({
         type: 'POST',
         url: '/api/addinfo',
-        data: params,
+        data: addparams,
         success: function(msg){
 			if (msg == "addsuccess"){
 				$('#tb_departments').bootstrapTable('refresh');
@@ -101,8 +105,8 @@ $('#add').click(function () {
 			else if (msg == "addfail"){
 				alert("ip exist");
 			}
-            $('#myModal').modal('hide');
-            $(function () { $('#myModal').on('hidden.bs.modal',function() {
+            $('#myaddModal').modal('hide');
+            $(function () { $('#myaddModal').on('hidden.bs.modal',function() {
                 $('input').val('');
                 })
             });
@@ -114,18 +118,18 @@ $('#add').click(function () {
 });
 
 $('#btn_delete').click(function () {
-	var raw = $.map($('#tb_departments').bootstrapTable('getSelections'),function(raw){
-		//a = JSON.stringify(raw);
+	var delraw = $.map($('#tb_departments').bootstrapTable('getSelections'),function(delraw){
+		//a = JSON.stringify(delraw);
 		//alert(a);
 		//alert(typeof(a));
-		return raw;
+		return delraw;
 	});
 	//a = JSON.stringify(raw);
 	//alert(raw[0].ip+raw[0].sys);
 	$.ajax({
 		type: 'POST',
 		url: '/api/delinfo',
-		data: JSON.stringify(raw),
+		data: JSON.stringify(delraw),
 		contentType: 'application/json',
 		success: function(msg) {
 			if (msg == "delsuccess"){
@@ -140,3 +144,49 @@ $('#btn_delete').click(function () {
 		}	
 	});
 });
+
+$('#btn_edit').click(function () {
+	var updateraw = $.map($('#tb_departments').bootstrapTable('getSelections'),function(updateraw){
+        return updateraw;
+	});
+	//alert(updateraw[0].id);
+	$('#updateid').val(updateraw[0].id);
+	$("#updateip").val(updateraw[0].ip);
+	$("#updatesys").val(updateraw[0].sys);
+	$("#updateapplication").val(updateraw[0].application);
+});
+	
+
+$('#update').click(function () {
+	
+    var updateparams = $('#updateform').serialize();
+    var ip = $('#updateip').val();
+    if (ip == '') {
+        $("#updateerror").html("* ip必须填写");
+        return ;
+    } 
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/updateinfo',
+        data: updateparams,
+        success: function(msg){
+            if (msg == "updatesuccess"){
+                $('#tb_departments').bootstrapTable('refresh');
+
+			}
+            else if (msg == "updatefail"){
+                alert("updatefail");
+            }
+            $('#myupdateModal').modal('hide');
+            $(function () { $('#myupdateModal').on('hidden.bs.modal',function() {
+                $('input').val('');
+                })
+            });
+        },
+        error: function(){
+            alert("false");
+        }
+    });
+});
+
