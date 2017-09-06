@@ -28,7 +28,7 @@ var TableInit = function () {
 			sidePagination: "client",           
 			pageNumber:1,                       
 			pageSize: 1,                       
-			pageList: [1, 2, 3, 4,10,20],       
+			pageList: [1, 2, 3, 5,10,20],       
 			search: true,                      
 			strictSearch: true,
 			showColumns: true,                 
@@ -41,24 +41,38 @@ var TableInit = function () {
 			cardView: false,                    
 			detailView: false,                  
 			columns: [{
-				checkbox: true
+				checkbox: true,
 			}, {
 				field: 'id',
 				title: 'id',
 			},{
 				field: 'ip',
-				title: 'ip地址'
+				title: 'ip地址',
 			}, {
 				field: 'sys',
-				title: '系统'
+				title: '系统',
 			}, {
 				field: 'application',
-				title: '用途'
+				title: '用途',
 			}, {
 				field: 'OPE',
-				title: '操作'
+				title: '操作',
+				events: opeEvents,
+				formatter: AddButtonFunc,
 			},]
 		});
+	};
+	
+	function AddButtonFunc(value,row,index) {
+		return [  
+            '<button id="btn_detail" type="button" class="btn btn-xs">详细信息</button>',  
+        ].join('');
+	};
+	
+	window.opeEvents = {
+		"click #btn_detail":function(e,value,row,index) {
+			alert("detail");
+		},
 	};
 
 	/*服务端分页传值 
