@@ -5,6 +5,7 @@ from flask_login import login_required,login_user,logout_user,current_user
 from .models import User,Sys_info
 from .info import info
 from .user import userlogin
+from .ansibleapi import ansibleapi
 
 @app.route('/')
 @app.route('/index')
@@ -13,6 +14,7 @@ def index():
 
 app.register_blueprint(userlogin.user)
 app.register_blueprint(info.info)
+app.register_blueprint(ansibleapi.ansibleapi)
 
 
 @app.route("/test1")

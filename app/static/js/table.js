@@ -27,7 +27,7 @@ var TableInit = function () {
 			//dataField: "infolist", 服务端分页
 			sidePagination: "client",           
 			pageNumber:1,                       
-			pageSize: 1,                       
+			pageSize: 3,                       
 			pageList: [1, 2, 3, 5,10,20],       
 			search: true,                      
 			strictSearch: true,
@@ -65,13 +65,43 @@ var TableInit = function () {
 	
 	function AddButtonFunc(value,row,index) {
 		return [  
-            '<button id="btn_detail" type="button" class="btn btn-xs">详细信息</button>',  
+            '<button id="btn_detail" type="button" class="btn btn-xs" data-toggle="modal" data-target="#myinfodetailModal">详细信息</button>',  
         ].join('');
 	};
 	
 	window.opeEvents = {
 		"click #btn_detail":function(e,value,row,index) {
-			alert("detail");
+			var inforaw = $.map($('#tb_departments').bootstrapTable('getSelections'),function(inforaw){
+				infoip = inforaw.ip;
+				return infoip
+			});
+			$.ajax({
+        		type: 'GET',
+        		url: '/ansibleapi/detailinfo?ip='+infoip,
+       		 	//data: "infoip"=infoip,
+				dataType: "json",
+      			success: function(msg){
+            		if (msg == "fail"){
+						alert("query detail fail");
+            		}
+            		else {
+                		$.each(msg,function(index,obj) {
+							//console.log(index,obj)
+							$('#infoip').html(obj.ip.address);
+							$('#infohostname').html(obj.hostname);
+							$('#infomemory').html(obj.memory.total+"MB");
+							$('#infosyslsb').html(obj.lsb);
+							$('#infocpunumber').html(obj.cpu);
+							$('#infocputype').html(obj.processor);
+							$('#infodns').html(JSON.stringify(obj.dns));
+							$('#infogateway').html(obj.ip.gateway);
+            			});
+                	}
+				},
+       			error: function(){
+            		alert("false");
+        		}	
+    		});
 		},
 	};
 

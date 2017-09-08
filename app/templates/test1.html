@@ -10,9 +10,8 @@
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/static/css/bootstrap-table.css" rel="stylesheet">
-	<script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/static/js/table.js"></script>
 	<script type="text/javascript" src="/static/js/bootstrap-table.js"></script>
 	<script type="text/javascript" src="/static/js/bootstrap-table-zh-CN.js"></script>
@@ -135,6 +134,50 @@
                 <button type="button" class="btn btn-primary" id="update">提交更改</button>
             </div>
 			</form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="myinfodetailModal" tabindex="-1" role="dialog" aria-labelledby="myinfodetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myinfodetailModalLabel">详细信息</h4>
+            </div>
+            <div class="modal-body text-center">
+				<table class="table">   
+				   <tbody>
+					   <tr>
+						 <th>IP：</th>
+						 <td id="infoip" ></td>
+						 <th>主机名：</th>
+						 <td id="infohostname"></td>
+					  </tr>
+					  <tr>
+						 <th>内存：</th>
+						 <td id="infomemory"></td>
+						 <th>系统版本：</th>
+						 <td id="infosyslsb"></td>
+					  </tr>
+					  <tr>
+						 <th>CPU核数：</th>
+						 <td id="infocpunumber"></td>
+						 <th>CPU型号：</th>
+						 <td id="infocputype"></td>
+					  </tr>
+					   <tr>
+						 <th>DNS：</th>
+						 <td id="infodns"></td>		 
+						 <th>网关：</th>
+						 <td id="infogateway"></td>		 
+					  </tr>
+				   </tbody>
+				</table>		
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>			
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
