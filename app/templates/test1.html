@@ -10,12 +10,11 @@
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/static/css/bootstrap-table.css" rel="stylesheet">
-	<script type="text/javascript" src="/static/js/jquery.js"></script>
-	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/static/js/table.js"></script>
-	<script type="text/javascript" src="/static/js/bootstrap-table.js"></script>
-	<script type="text/javascript" src="/static/js/bootstrap-table-zh-CN.js"></script>
-    <title>首页</title>
+	<script type="text/javascript" src="/static/js/basic/jquery.js"></script>
+	<script type="text/javascript" src="/static/js/basic/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/js/basic/bootstrap-table.js"></script>
+	<script type="text/javascript" src="/static/js/basic/bootstrap-table-zh-CN.js"></script>
+    <title>基础信息</title>
     
   </head>
   
@@ -45,37 +44,43 @@
             <div class="modal-body text-center">
 				<form class="form-horizontal" id="addform">
     <fieldset>
-      
+		<div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">ip地址</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge form-control" id="addip" name="addip">
+			<span id="addiperror"></span>
+            
+          </div>
+		</div>
+		
+		<div class="control-group">
+
+          <!-- Text input-->
+			  <label class="control-label">系统</label>
+                            <div class="controls">
+                                <select id="addsys" name="addsys" class="selectpicker show-tick form-control">
+                                        <option>Linux</option>
+                                        <option>Windows</option>
+                                </select>
+                            </div>
+		</div>
+
     <div class="control-group">
 
           <!-- Text input-->
-          <label class="control-label" for="input01"></label>
+          <label class="control-label" for="input01">用途</label>
           <div class="controls">
-            ip地址:<input type="text" class="input-xlarge" id="addip" name="addip">
-			<span id="adderror"></span>
-            
+					 <select id="addapplication" name="addapplication" class="selectpicker show-tick form-control">
+                                        <option>nginx</option>
+                                        <option>tomcat</option>
+                                        <option>cache</option>
+                                        <option>s</option>
+                                </select>
           </div>
         </div>
-
-    <div class="control-group">
-
-          <!-- Text input-->
-          <label class="control-label" for="input01"></label>
-          <div class="controls">
-            系统:<input type="text" class="input-xlarge" name="addsys">
-            
-          </div>
-        </div>
-
-    <div class="control-group">
-
-          <!-- Text input-->
-          <label class="control-label" for="input01"></label>
-          <div class="controls">
-            用途:<input type="text" class="input-xlarge" name="addapplication">
-            
-          </div>
-        </div>
+	<div class='tomcatadd'></div>
 			</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -182,8 +187,7 @@
     </div><!-- /.modal -->
 </div>
 
-
-	<script type="text/javascript" src="/static/js/table.js"></script>
+	<script type="text/javascript" src="/static/js/basicinfo.js"></script>
   </body>
 
 </html>

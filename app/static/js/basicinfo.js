@@ -55,6 +55,9 @@ var TableInit = function () {
 				field: 'application',
 				title: '用途',
 			}, {
+				field: 'webserver',
+				title: '应用服务器',
+			}, {
 				field: 'OPE',
 				title: '操作',
 				events: opeEvents,
@@ -132,9 +135,20 @@ $('#add').click(function () {
 	var addparams = $('#addform').serialize();
 	var ip = $('#addip').val();
 	if (ip == '') {
-        $("#adderror").html("* ip必须填写");
+        $("#addiperror").html("* ip必须填写");
         return ;
     }
+	if ($('#addapplication').val() == "tomcat"){
+		if ($('#addwebserver').val()==''){
+			$("#addwebservererror").html("* 应用服务器必须填写");
+	        return ;
+		}
+		if ($('#addwebproject').val()==''){
+			$("#addwebprojecterror").html("* 应用工程必须填写");
+	        return ;
+		}
+		
+	}
 
     $.ajax({
         type: 'POST',
@@ -233,4 +247,17 @@ $('#update').click(function () {
         }
     });
 });
+
+$('#addapplication').change(function(){
+	if ($(this).val() == "tomcat"){
+		$('.tomcatadd').append("<div class='control-group'><label class='control-label' for='input01'>应用服务器</label><div class='controls'><input type='text' class='input-xlarge form-control' id='addwebserver' name='addwebserver'><span id='addwebservererror'></span></div></div>"+"<div class='control-group'><label class='control-label' for='input01'>应用工程</label><div class='controls'><input type='text' class='input-xlarge form-control' id='addwebproject' name='addwebproject'><span id='addwebprojecterror'></span></div></div>")
+	}
+	else if ($(this).val() != "tomcat"){
+		$('.tomcatadd input').remove()
+		$('.tomcatadd label').remove()
+	}
+	
+});
+
+
 

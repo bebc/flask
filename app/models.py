@@ -49,6 +49,16 @@ class Sys_info(db.Model):
 	ip = db.Column(db.String(64),index=True,nullable=False)
 	sys = db.Column(db.String(512))
 	application = db.Column(db.String(64))
+	webserver = db.Column(db.String(64),index=True)
 
 	def __repr__(self):
+		return '<Ip %r>' % (self.ip)
+
+class Application_info(db.Model):
+	id = db.Column(db.Integer,primary_key = True,autoincrement=True)
+	ip = db.Column(db.String(64),index=True,nullable=False)
+	webserver = db.Column(db.String(64),nullable=False)
+	webproject = db.Column(db.String(64),nullable=False)
+
+	def __reper_(self):
 		return '<Ip %r>' % (self.ip)

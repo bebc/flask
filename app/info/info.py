@@ -18,7 +18,7 @@ def sysinfo():
 	infolist = []
 
 	for info in sysinfo:
-		infodic = {'id':info.id,'ip':info.ip,'sys':info.sys,'application':info.application}
+		infodic = {'id':info.id,'ip':info.ip,'sys':info.sys,'application':info.application,'webserver':info.webserver}
 		infolist.append(infodic)
 	#return jsonify({"total":syscount,"infolist":infolist}) 服务端分页返回格式
 	return jsonify(infolist)
@@ -29,15 +29,28 @@ def sysadd():
 		addip = request.form.get('addip')
 		addsys = request.form.get('addsys')
 		addapplication = request.form.get('addapplication')
+		addwebserver = request.form.get('addwebserver')
+		addwebproject = request.form.get('addwebproject')
 		checkip = models.Sys_info.query.filter_by(ip=addip).first()
 
-		if checkip == None:
-			addinfo = models.Sys_info(ip=addip,sys=addsys,application=addapplication)
-			checkdbadd = db.session.add(addinfo)
-			if checkdbadd == None:
-				checkdbcommit = db.session.commit()
-			if checkdbcommit == None:
+		if checkip == None and addapplication == 'tomcat' and addwebserver != None and addwebproject != None:
+			try:
+				addinfo = models.Sys_info(ip=addip,sys=addsys,application=addapplication,webserver=addwebserver)
+				addapplicationinfo = models.Application_info(ip=addip,webserver=addwebserver,webproject=addwebproject)
+				db.session.add(addinfo)
+				db.session.add(addapplicationinfo)
+				db.session.commit()
 				return "addsuccess"
+			except:
+				return "fail"
+		elif checkip == None:
+			try:
+				addinfo = models.Sys_info(ip=addip,sys=addsys,application=addapplication,webserver=addwebserver)
+				db.session.add(addinfo)
+				db.session.commit()
+				return "addsuccess"
+			except:
+				return "fail"
 		else:
 			return "addfail"
 
@@ -50,13 +63,21 @@ def sysdel():
 		jsondata = json.loads(getdata)
 
 		for data in jsondata:
-			try:
-				deldata = models.Sys_info.query.filter_by(id=data["id"],ip=data["ip"],sys=data["sys"],application=data["application"]).first()
-				db.session.delete(deldata)
-				db.session.commit()
-				#return "delsuccess"
-			except:
-				return "delfail"
+			if data["application"] == 'tomcat':
+				try:
+					deldata = models.Sys_info.query.filter_by(id=data["id"],ip=data["ip"],sys=data["sys"],application=data["application"],webserver=data["webserver"]).first()
+					db.session.delete(deldata)
+					models.Application_info.query.filter_by(ip=data["ip"],webserver=data["webserver"]).delete()
+					db.session.commit()
+				except:
+					return "delfail"
+			else:
+				try:
+					deldata = models.Sys_info.query.filter_by(id=data["id"],ip=data["ip"],sys=data["sys"],application=data["application"],webserver=data["webserver"]).first()
+					db.session.delete(deldata)
+					db.session.commit()
+				except:
+					return "delfail"
 
 		return "delsuccess"
 
