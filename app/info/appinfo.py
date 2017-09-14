@@ -9,7 +9,7 @@ appinfo = Blueprint('appinfo',__name__)
 @appinfo.route("/api/appinfo",methods = ['GET','POST'])
 def Appinfo():
 	getwebproject = str(request.args.get('webproject'))
-	if getwebproject == 'null':
+	if getwebproject == 'null' or getwebproject == 'All':
 		appinfo = Application_info.query.all()
 		'''
 		服务端分页代码
@@ -48,12 +48,36 @@ def appselect():
 	except:
 		return "fail"
 
-@appinfo.route("/api/appquery",methods = ['GET','POST'])
+@appinfo.route("/api/appadd",methods = ['GET','POST'])
 def appquery():
 	if request.method == 'POST':
-		getwebproject = str(request.get_data())
-		webproject = Application_info.query.filter_by(webproject=getwebproject).all()
-		#for data in webproject:
-			
-	return "appquery"
+		addappproject = request.form.get('addappproject')	
+		addip = request.form.get('addip')	
+		addappwebserver = request.form.get('addappwebserver')	
+		checkapp = Application_info.query.filter_by(ip=addip,webserver=addappwebserver,webproject=addappproject).first()
+		if checkapp == None:
+			try:
+				addappinfo = Application_info(ip=addip,webproject=addappproject,webserver=addappwebserver)
+				db.session.add(addappinfo)
+				db.session.commit()
+				return "appaddsuccess"
+			except:
+				return "appaddfail"
+		else:
+			return "appexist"
 
+@appinfo.route("/api/appdel",methods = ['GET','POST'])
+def appdel():
+	if request.method == 'POST':
+		getdata = request.get_data()
+		jsondata = json.loads(getdata)
+
+		for data in jsondata:
+			try:
+				delapp = Application_info.query.filter_by(ip=data["ip"],webproject=data["webproject"],webserver=data["webserver"]).first()
+				db.session.delete(delapp)
+				db.session.commit()
+			except:
+				return "delfail"
+		
+		return "delsuccess"

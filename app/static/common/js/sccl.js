@@ -395,13 +395,13 @@ $(function(){
 
 	/*菜单json*/
 	var menu = [{"id":"1","name":"主菜单","parentId":"0","url":"","icon":"","order":"1","isHeader":"1","childMenus":[
-					{"id":"3","name":"商品管理","parentId":"1","url":"","icon":"&#xe604;","order":"1","isHeader":"0","childMenus":[
-						{"id":"4","name":"品牌管理","parentId":"3","url":"test1","icon":"","order":"1","isHeader":"0","childMenus":""},
-						{"id":"5","name":"分类管理","parentId":"3","url":"test2","icon":"","order":"1","isHeader":"0","childMenus":""}
+					{"id":"3","name":"资产管理","parentId":"1","url":"","icon":"&#xe604;","order":"1","isHeader":"0","childMenus":[
+						{"id":"4","name":"主机管理","parentId":"3","url":"test1","icon":"","order":"1","isHeader":"0","childMenus":""},
+						{"id":"5","name":"应用分类管理","parentId":"3","url":"test2","icon":"","order":"1","isHeader":"0","childMenus":""}
 					]},
-					{"id":"6","name":"订单管理","parentId":"1","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
-						{"id":"7","name":"已付款","parentId":"6","url":"home3.html","icon":"","order":"1","isHeader":"0","childMenus":""},
-						{"id":"8","name":"未付款","parentId":"6","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
+					{"id":"6","name":"自动化运维","parentId":"1","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
+						{"id":"7","name":"批量下发","parentId":"6","url":"home3.html","icon":"","order":"1","isHeader":"0","childMenus":""},
+						{"id":"8","name":"预留","parentId":"6","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
 					]}
 				]},
 				{"id":"2","name":"框架案例","parentId":"0","url":"","icon":"","order":"2","isHeader":"1","childMenus":[

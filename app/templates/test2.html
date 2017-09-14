@@ -22,16 +22,55 @@
 	<div class="panel-body" style="padding-bottom:0px;">
         <div id="toolbar" class="btn-group">
             <button id="btn_add" type="button" class="btn btn-default" data-toggle="modal" data-target="#myaddModal" >
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增应用
             </button>
             <button id="btn_delete" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
         </div>
-		<select id="appselect" name="appselect" class="selectpicker"></select>
+		<select id="appselect" name="appselect" class="selectpicker">
+			<option>All</option>
+		</select>
 		<button id="appquery" type="button" class="btn btn-default">应用查询</button>
         <table id="tb_departments"></table>
     </div>
+
+	<div class="modal fade" id="myaddModal" tabindex="-1" role="dialog" aria-labelledby="myaddModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myaddModalLabel">新增应用</h4>
+            </div>
+            <div class="modal-body text-center">
+				<form class="form-horizontal" id="addform">
+			 <table class="table">
+                   <tbody>
+                       <tr>
+                         <th>IP地址:</th>
+                         <td id="addip" ></td>
+						</tr>
+						<tr>
+                         <th>应用服务器:</th>
+                         <td id="addappwebserver"></td>
+                      </tr>
+						<tr>
+                         <th>应用工程:<input id="addappproject" name="addappproject"></input><span id="addappprojecterror"></span></th>
+                      </tr>
+					</tbody>
+				</table>
+            
+		
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="appadd">提交更改</button>
+            </div>
+			</form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 
 	<script type="text/javascript" src="/static/js/appinfo.js"></script>
   </body>

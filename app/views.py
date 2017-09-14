@@ -27,6 +27,11 @@ def test1():
 def test2():
 	return render_template("test2.html")
 
+
+@app.route("/home")
+def home():
+	return render_template("home.html")
+
 @app.route('/api/tasks')
 def gettasks():
 	tasks = [

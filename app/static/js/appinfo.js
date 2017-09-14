@@ -13,9 +13,11 @@ $(function () {
 
 $('#appquery').click(function() {
     var webproject = $('#appselect').val();
-	var oTable = new TableInit();
-    oTable.Init(webproject);
-   // $('#tb_departments').bootstrapTable('refresh');
+	var a = {
+		url:'/api/appinfo?webproject='+webproject,
+		silent:true,
+	};
+    $('#tb_departments').bootstrapTable('refresh',a);
 
 });
 
@@ -116,4 +118,72 @@ $(document).ready(function(){
 	appselect();
 });
 
+
+$('#btn_add').click(function () {
+    var addraw = $.map($('#tb_departments').bootstrapTable('getSelections'),function(addraw){
+        return addraw;
+    });
+    addip = addraw[0].ip;
+    addappwebserver = addraw[0].webserver;
+	$("#addip").html(addip);
+	$("#addappwebserver").html(addappwebserver);
+});
+
+$('#appadd').click(function () {
+   	var params = $('#addform').serialize();
+	var addparams = params+"&addip="+addip+"&addappwebserver="+addappwebserver
+	var addappproject = $('#addappproject').val();
+	if (addappproject == '') {
+       	$("#addappprojecterror").html("* 应用工程必须填写");
+       	return ;
+   	}
+
+ 	$.ajax({
+       	type: 'POST',
+       	url: '/api/appadd',
+       	data: addparams,
+       	success: function(msg){
+           	if (msg == "appaddsuccess"){
+               	$('#tb_departments').bootstrapTable('refresh');
+           	}	
+            else if (msg == "appaddfail"){
+               	alert("appaddfail");
+           	}
+			else if (msg == "appexist"){
+				alert("appexist")
+			}
+            $('#myaddModal').modal('hide');
+            $(function () { $('#myaddModal').on('hidden.bs.modal',function() {
+               	$('input').val('');
+               	})
+           	});
+        },
+        error: function(){
+           	alert("false");
+        }
+    });
+});
+
+$('#btn_delete').click(function () {
+    var delraw = $.map($('#tb_departments').bootstrapTable('getSelections'),function(delraw){
+	return delraw;
+    });
+	$.ajax({
+        type: 'POST',
+        url: '/api/appdel',
+        data: JSON.stringify(delraw),
+        contentType: 'application/json',
+        success: function(msg) {
+            if (msg == "delsuccess"){
+                $('#tb_departments').bootstrapTable('refresh');
+            }
+            else if (msg == "delfail"){
+                alert("delfail")
+            }
+        },
+        error: function(){
+            alert("false");
+        }
+    });
+});
 
