@@ -25,9 +25,9 @@ var TableInit = function (webproject) {
 	var oTableInit = new Object();
     
 	oTableInit.Init = function (webproject) {
-		console.log(webproject)
+		//console.log(webproject)
 		var url='/api/appinfo?webproject='+webproject
-		console.log(url)
+		//console.log(url)
 		$('#tb_departments').bootstrapTable({
 			url: url, 
 			dataType: "json",
@@ -123,6 +123,15 @@ $('#btn_add').click(function () {
     var addraw = $.map($('#tb_departments').bootstrapTable('getSelections'),function(addraw){
         return addraw;
     });
+	if (addraw == ""){
+		$('#btn_add').removeAttr('data-toggle');
+		alert("请根据服务器选择");
+		return
+	}
+	else {
+		$('#btn_add').attr('data-toggle','modal');
+	}
+
     addip = addraw[0].ip;
     addappwebserver = addraw[0].webserver;
 	$("#addip").html(addip);
@@ -168,6 +177,10 @@ $('#btn_delete').click(function () {
     var delraw = $.map($('#tb_departments').bootstrapTable('getSelections'),function(delraw){
 	return delraw;
     });
+	if (delraw == ""){
+		alert("请选择删除项");
+		return
+	}
 	$.ajax({
         type: 'POST',
         url: '/api/appdel',

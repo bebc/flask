@@ -184,6 +184,10 @@ $('#btn_delete').click(function () {
 	});
 	//a = JSON.stringify(raw);
 	//alert(raw[0].ip+raw[0].sys);
+	if (delraw == ''){
+		alert("请选择删除项");
+		return
+	}
 	$.ajax({
 		type: 'POST',
 		url: '/api/delinfo',

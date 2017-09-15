@@ -60,6 +60,8 @@ def sysadd():
 def sysdel():
 	if request.method == 'POST':
 		getdata = request.get_data()
+		if getdata == "" or getdata == None:
+			return "delfail"
 		jsondata = json.loads(getdata)
 
 		for data in jsondata:
