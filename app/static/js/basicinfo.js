@@ -78,6 +78,15 @@ var TableInit = function () {
 				infoip = inforaw.ip;
 				return infoip
 			});
+			if (inforaw == ""){
+				$('#btn_detail').removeAttr('data-toggle');
+				alert("请选择主机");
+				return
+			}
+			else {
+        		$('#btn_detail').attr('data-toggle','modal');
+   			 }
+
 			$.ajax({
         		type: 'GET',
         		url: '/ansibleapi/detailinfo?ip='+infoip,
