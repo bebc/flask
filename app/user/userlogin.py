@@ -20,13 +20,14 @@ def login():
        # return redirect(url_for('index'))
 
 	if request.method == 'POST':
+		session['username'] = request.form.get('username')
 		user = models.User.query.filter_by(name=request.form.get('username')).first()
 		#name=request.form.get('username')
 		password = request.form.get('password', None)
 		#user = User(name, password)
 		if user is not None and user.is_active and user.confirm_password(password):
 			login_user(user)
-			return user.name
+			return "loginsuccess"
 		else:
 			return "not active"
 

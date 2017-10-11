@@ -394,31 +394,32 @@ $(function(){
 	//getSkinByCookie();
 
 	/*菜单json*/
-	var menu = [{"id":"1","name":"Dashboard","parentId":"0","url":"","icon":"","order":"1","isHeader":"","childMenus":""},
-				{"id":"2","name":"资产管理","parentId":"0","url":"","icon":"&#xe604;","order":"1","isHeader":"0","childMenus":[
-					{"id":"3","name":"主机管理","parentId":"2","url":"test1","icon":"","order":"1","isHeader":"0","childMenus":""},
-					{"id":"4","name":"应用分类管理","parentId":"2","url":"test2","icon":"","order":"1","isHeader":"0","childMenus":""}
+	var menu = [{"id":"1","name":"主菜单","parentId":"0","url":"","icon":"","order":"1","isHeader":"1","childMenus":[
+					{"id":"3","name":"资产管理","parentId":"1","url":"","icon":"&#xe604;","order":"1","isHeader":"0","childMenus":[
+						{"id":"4","name":"主机管理","parentId":"3","url":"test1","icon":"","order":"1","isHeader":"0","childMenus":""},
+						{"id":"5","name":"应用分类管理","parentId":"3","url":"test2","icon":"","order":"1","isHeader":"0","childMenus":""}
+					]},
+					{"id":"6","name":"代码发布","parentId":"1","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
+						{"id":"7","name":"正向发布","parentId":"6","url":"deploy_add","icon":"","order":"1","isHeader":"0","childMenus":""},
+						{"id":"8","name":"预留","parentId":"6","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
+					]}
 				]},
-				{"id":"5","name":"代码发布","parentId":"0","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
-					{"id":"6","name":"正向发布","parentId":"5","url":"deploy_add","icon":"","order":"1","isHeader":"0","childMenus":""},
-					{"id":"7","name":"预留","parentId":"5","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
-				]},
-				{"id":"8","name":"Ansible模块","parentId":"0","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
-					{"id":"9","name":"运行模块","parentId":"8","url":"deploy_add","icon":"","order":"1","isHeader":"0","childMenus":""},
-					{"id":"10","name":"剧本模块","parentId":"8","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
-				]},
-				{"id":"11","name":"计划任务","parentId":"0","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
-					{"id":"12","name":"添加任务","parentId":"11","url":"deploy_add","icon":"","order":"1","isHeader":"0","childMenus":""},
-					{"id":"13","name":"任务列表","parentId":"11","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
-				]},
-				{"id":"14","name":"操作日志","parentId":"0","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
-					{"id":"15","name":"日志查看","parentId":"14","url":"opsinfo","icon":"","order":"1","isHeader":"0","childMenus":""},
-					{"id":"16","name":"预留","parentId":"14","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
-				]},
-				{"id":"17","name":"用户中心","parentId":"0","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
-					{"id":"18","name":"用户管理","parentId":"17","url":"deploy_add","icon":"","order":"1","isHeader":"0","childMenus":""},
-					{"id":"19","name":"用户配置","parentId":"17","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
-				]},
+				{"id":"2","name":"框架案例","parentId":"0","url":"","icon":"","order":"2","isHeader":"1","childMenus":[
+					{"id":"9","name":"新功能","parentId":"2","url":"","icon":"","order":"1","isHeader":"0","childMenus":""},
+					{"id":"10","name":"多级","parentId":"2","url":"","icon":"","order":"1","isHeader":"0","childMenus":[
+						{"id":"11","name":"一级","parentId":"10","url":"","icon":"","order":"1","isHeader":"0","childMenus":""},
+						{"id":"12","name":"一级","parentId":"10","url":"","icon":"","order":"1","isHeader":"0","childMenus":[
+							{"id":"13","name":"二级","parentId":"12","url":"","icon":"","order":"1","isHeader":"0","childMenus":""},
+							{"id":"14","name":"二级","parentId":"12","url":"","icon":"","order":"1","isHeader":"0","childMenus":[
+								{"id":"15","name":"三级","parentId":"14","url":"","icon":"","order":"1","isHeader":"0","childMenus":""},
+								{"id":"16","name":"三级","parentId":"14","url":"","icon":"","order":"1","isHeader":"0","childMenus":[
+									{"id":"17","name":"四级","parentId":"16","url":"","icon":"","order":"1","isHeader":"0","childMenus":""},
+									{"id":"18","name":"四级","parentId":"16","url":"","icon":"","order":"1","isHeader":"0","childMenus":""}
+								]}
+							]}
+						]}
+					]}
+				]}
 				];
 	initMenu(menu,$(".side-menu"));
 	$(".side-menu > li").addClass("menu-item");

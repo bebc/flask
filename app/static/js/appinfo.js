@@ -10,7 +10,7 @@ $(function () {
 
 });
 
-
+/*点击应用查询按钮根据webproject刷新查找表格*/
 $('#appquery').click(function() {
     var webproject = $('#appselect').val();
 	var a = {
@@ -18,10 +18,9 @@ $('#appquery').click(function() {
 		silent:true,
 	};
     $('#tb_departments').bootstrapTable('refresh',a);
-
 });
 
-var TableInit = function (webproject) {
+var TableInit = function () {
 	var oTableInit = new Object();
     
 	oTableInit.Init = function (webproject) {
@@ -41,8 +40,8 @@ var TableInit = function (webproject) {
 			queryParams: oTableInit.queryParams,			
 			sidePagination: "client",           
 			pageNumber:1,                       
-			pageSize: 3,                       
-			pageList: [1, 3, 5,10,20],       
+			pageSize: 10,
+			pageList: [1, 10, 20, 50],
 			search: true,                      
 			strictSearch: true,
 			showColumns: true,                 
@@ -68,6 +67,12 @@ var TableInit = function (webproject) {
 			}, {
 				field: 'webproject',
 				title: '应用工程',
+			}, {
+				field: 'webpath',
+				title: 'app路径',
+			}, {
+				field: 'webport',
+				title: '端口号',
 			}, {
 				field: 'OPE',
 				title: '操作',
@@ -98,6 +103,7 @@ var ButtonInit = function () {
 	return oInit;
 };
 
+/*应用查询select框动态添加应用工程*/
 function appselect() {
 	$.ajax({
         type: 'POST',
@@ -144,7 +150,7 @@ $('#appadd').click(function () {
 	var addappproject = $('#addappproject').val();
 	if (addappproject == '') {
        	$("#addappprojecterror").html("* 应用工程必须填写");
-       	return ;
+       	return false;
    	}
 
  	$.ajax({

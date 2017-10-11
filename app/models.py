@@ -1,6 +1,7 @@
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from datetime import datetime
 
 class User(db.Model,UserMixin):
 	id = db.Column(db.Integer,primary_key = True,autoincrement=True)
@@ -59,6 +60,35 @@ class Application_info(db.Model):
 	ip = db.Column(db.String(64),index=True,nullable=False)
 	webserver = db.Column(db.String(64),nullable=False)
 	webproject = db.Column(db.String(64),nullable=False)
+	webpath = db.Column(db.String(128),nullable=False)
+	webport = db.Column(db.String(64),nullable=False)
 
 	def __reper_(self):
 		return '<Ip %r>' % (self.ip)
+
+class Ops_record(db.Model):
+	id = db.Column(db.Integer,primary_key = True,autoincrement=True)
+	name = db.Column(db.String(64),index = True,nullable=False)
+	ops_type = db.Column(db.String(64),nullable=False)
+	service_type = db.Column(db.String(64),nullable=False)
+	date = db.Column(db.DateTime, default=datetime.now())
+
+	def __reper_(self):
+		return '<Name %r>' % (self.name)
+
+class deploy_info(db.Model):
+	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+	name = db.Column(db.String(64), index=True, nullable=False)
+	webproject = db.Column(db.String(64), nullable=False)
+	version = db.Column(db.String(64), nullable=False)
+	result = db.Column(db.String(64), nullable=False)
+	create_date = db.Column(db.DateTime, default=datetime.now())
+	execute_date = db.Column(db.DateTime, default=datetime.now())
+
+	def __reper_(self):
+		return '<Name %r>' % (self.name)
+
+
+
+
+

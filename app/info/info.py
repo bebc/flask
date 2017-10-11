@@ -1,11 +1,13 @@
 import json
 from app import models,db
-from flask import request,jsonify
+from flask import request,jsonify,session
 from flask import Blueprint
+from app.public.record import OpsRecord
 
 info = Blueprint('info',__name__)
 
-@info.route("/api/info")
+opsrecord = OpsRecord()		#记录操作日志实例
+@info.route("/api/info",methods = ['GET','POST'])
 def sysinfo():
 	sysinfo = models.Sys_info.query.all()
 	'''
@@ -31,26 +33,30 @@ def sysadd():
 		addapplication = request.form.get('addapplication')
 		addwebserver = request.form.get('addwebserver')
 		addwebproject = request.form.get('addwebproject')
+		addwebpath = request.form.get('addwebpath')
+		addwebport= request.form.get('addwebport')
 		checkip = models.Sys_info.query.filter_by(ip=addip).first()
 
-		if checkip == None and addapplication == 'tomcat' and addwebserver != None and addwebproject != None:
+		if checkip == None and addapplication == 'tomcat' and addwebserver != None and addwebproject != None and addwebpath != None and addwebport != None:   #应用为tomcat时添加资产
 			try:
 				addinfo = models.Sys_info(ip=addip,sys=addsys,application=addapplication,webserver=addwebserver)
-				addapplicationinfo = models.Application_info(ip=addip,webserver=addwebserver,webproject=addwebproject)
+				addapplicationinfo = models.Application_info(ip=addip,webserver=addwebserver,webproject=addwebproject,webpath=addwebpath,webport=addwebport)
 				db.session.add(addinfo)
 				db.session.add(addapplicationinfo)
 				db.session.commit()
+				opsrecord.asset_record("addtomcat", "asset")
 				return "addsuccess"
 			except:
 				return "fail"
-		elif checkip == None:
-			try:
+		elif checkip == None and addapplication != 'tomcat':  #应用不为tomcat时添加资产
+			#try:
 				addinfo = models.Sys_info(ip=addip,sys=addsys,application=addapplication,webserver=addwebserver)
 				db.session.add(addinfo)
 				db.session.commit()
+				opsrecord.asset_record("add","asset")
 				return "addsuccess"
-			except:
-				return "fail"
+			#except:
+				#return "fail"
 		else:
 			return "addfail"
 
@@ -71,6 +77,7 @@ def sysdel():
 					db.session.delete(deldata)
 					models.Application_info.query.filter_by(ip=data["ip"],webserver=data["webserver"]).delete()
 					db.session.commit()
+					opsrecord.asset_record("deltomcat", "asset")
 				except:
 					return "delfail"
 			else:
@@ -78,11 +85,12 @@ def sysdel():
 					deldata = models.Sys_info.query.filter_by(id=data["id"],ip=data["ip"],sys=data["sys"],application=data["application"],webserver=data["webserver"]).first()
 					db.session.delete(deldata)
 					db.session.commit()
+					opsrecord.asset_record("del", "asset")
 				except:
 					return "delfail"
 
 		return "delsuccess"
-
+'''
 @info.route("/api/updateinfo",methods = ['GET','POST'])
 def sysupdate():
 	if request.method == 'POST':
@@ -91,7 +99,7 @@ def sysupdate():
 		updatesys = request.form.get('updatesys')
 		updateapplication = request.form.get('updateapplication')
 		updateinfo = models.Sys_info.query.filter_by(id=updateid).first()
-		
+
 		if updateinfo != None:
 			try:
 				updateinfo.ip = updateip
@@ -104,4 +112,5 @@ def sysupdate():
 		else:
 			return "updatefail"
 
-	return "/api/updateinfo"
+	return "/api/updateinfo" 
+'''

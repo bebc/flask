@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="keywords" content="scclui框架">
+    <meta name="description" content="scclui为轻量级的网站后台管理系统模版。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-table.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-select.css" rel="stylesheet">
+    <link href="/static/css/uploadify.css" rel="stylesheet">
+    <script type="text/javascript" src="/static/js/basic/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/basic/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/basic/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/static/js/basic/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="/static/js/basic/bootstrap-select.js"></script>
+    <script type="text/javascript" src="/static/js/basic/jquery.uploadify.min.js"></script>
+    <title>基础信息</title>
+
+</head>
+
+<body>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <legend><i class="fa  fa-paper-plane"></i>正向发布</legend>
+                        <form id="deployadd" class="main form-horizontal">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">发布项目</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="web_project" id="web_project">
+                                            <option value="" disabled selected></option>
+                                        </select>
+                                        <span id="web_project_error"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">部署目标</label>
+                                    <div class="col-sm-6">
+                                        <select class="selectpicker show-tick form-control" name="web_server" id="web_server" multiple>
+                                        </select>
+                                         <span id="web_server_error"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">版本号</label>
+                                    <div class="col-sm-6">
+                                        <input id="deploy_version" class="form-control" placeholder="输入版本号" name="deploy_version" value="">
+                                        <span id="deploy_version_error"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="fileQueue">
+                                    <div class="col-sm-2" >
+                                        <input class="form-control" type="file" name="uploadify" id="uploadify"/>
+                                    </div>
+                                    <p>
+                                        <a href="javascript:$('#uploadify').uploadify('upload')">上传</a>|
+                                        <a href="javascript:$('#uploadify').uploadify('cancel')">取消上传</a>
+                                    </p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"></label>
+                                    <button id = "submit" type="button" class="btn btn-default">执行</button>
+                                </div>
+
+                            </fieldset>
+                        </form>
+
+                    </div>
+                    <!-- /.col-lg-6 (nested) -->
+                    <div class="col-lg-6">
+                        <legend><i class="fa  fa-paper-plane-o"></i>执行结果</legend>
+                        <pre>
+                    <div id="result">
+                    </div>
+                </pre>
+                        <!-- /.col-lg-6 (nested) -->
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $("#uploadify").uploadify({
+        'fileObjName': 'war',
+        'buttonText': '选择上传文件',
+        //指定swf文件
+        'swf': '/static/js/basic/uploadify.swf',
+        //后台处理的页面
+        'uploader': '/upload_file',
+        'queueID': 'fileQueue',
+        //按钮显示的文字
+        'auto': false,
+        //设置为true将允许多文件上传
+        'multi': true,
+        'onUploadSuccess': function (file, data, response) {
+            alert('上传成功！')
+        }
+    });
+</script>
+
+<script type="text/javascript" src="/static/js/deploy/deployadd.js"></script>
+</body>
+
+</html>

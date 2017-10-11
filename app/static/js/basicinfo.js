@@ -27,8 +27,8 @@ var TableInit = function () {
 			//dataField: "infolist", 服务端分页
 			sidePagination: "client",           
 			pageNumber:1,                       
-			pageSize: 3,                       
-			pageList: [1, 2, 3, 5,10,20],       
+			pageSize: 10,
+			pageList: [1, 10, 20, 50],
 			search: true,                      
 			strictSearch: true,
 			showColumns: true,                 
@@ -145,16 +145,24 @@ $('#add').click(function () {
 	var ip = $('#addip').val();
 	if (ip == '') {
         $("#addiperror").html("* ip必须填写");
-        return ;
+        return false;
     }
 	if ($('#addapplication').val() == "tomcat"){
 		if ($('#addwebserver').val()==''){
 			$("#addwebservererror").html("* 应用服务器必须填写");
-	        return ;
+	        return false;
 		}
 		if ($('#addwebproject').val()==''){
 			$("#addwebprojecterror").html("* 应用工程必须填写");
-	        return ;
+	        return false;
+		}
+		if ($('#addwebpath').val()==''){
+			$("#addwebpatherror").html("* app路径必须填写");
+	        return false;
+		}
+		if ($('#addwebport').val()==''){
+			$("#addwebporterror").html("* 端口号必须填写");
+	        return false;
 		}
 		
 	}
@@ -171,6 +179,9 @@ $('#add').click(function () {
 			}
 			else if (msg == "addfail"){
 				alert("ip exist");
+			}
+			else {
+				alert (msg);
 			}
             $('#myaddModal').modal('hide');
             $(function () { $('#myaddModal').on('hidden.bs.modal',function() {
@@ -263,7 +274,7 @@ $('#update').click(function () {
 
 $('#addapplication').change(function(){
 	if ($(this).val() == "tomcat"){
-		$('.tomcatadd').append("<div class='control-group'><label class='control-label' for='input01'>应用服务器</label><div class='controls'><input type='text' class='input-xlarge form-control' id='addwebserver' name='addwebserver'><span id='addwebservererror'></span></div></div>"+"<div class='control-group'><label class='control-label' for='input01'>应用工程</label><div class='controls'><input type='text' class='input-xlarge form-control' id='addwebproject' name='addwebproject'><span id='addwebprojecterror'></span></div></div>")
+		$('.tomcatadd').append("<div class='control-group'><label class='control-label' for='input01'>应用服务器</label><div class='controls'><input type='text' class='input-xlarge form-control' id='addwebserver' name='addwebserver'><span id='addwebservererror'></span></div></div>"+"<div class='control-group'><label class='control-label' for='input01'>应用工程</label><div class='controls'><input type='text' class='input-xlarge form-control' id='addwebproject' name='addwebproject'><span id='addwebprojecterror'></span></div></div>"+"<div class='control-group'><label class='control-label' for='input01'>app路径</label><div class='controls'><input type='text' class='input-xlarge form-control' id='addwebpath' name='addwebpath'><span id='addwebpatherror'></span></div></div>"+"<div class='control-group'><label class='control-label' for='input01'>端口号</label><div class='controls'><input type='text' class='input-xlarge form-control' id='addwebport' name='addwebport'><span id='addwebporterror'></span></div></div>")
 	}
 	else if ($(this).val() != "tomcat"){
 		$('.tomcatadd input').remove()
