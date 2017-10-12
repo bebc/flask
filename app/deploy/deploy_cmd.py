@@ -8,9 +8,9 @@ def cmd(web_project,host,deploy_version):
         stdin,stdout,stderr = ssh.exec_command(cmd)
         error = stderr.read().decode('utf-8')
         if error !='':
-            print (host+':'+error)
+            return (host+':'+error)
         else:
-            print (host+':'+stdout.read().decode('utf-8'))
+            return (host+':'+stdout.read().decode('utf-8'))
 
     tomcat_path = '/opt/tomcat7'+web_project
     cmd = 'scp /data/'+web_project+'-web.war '+host+':/webapps/run'

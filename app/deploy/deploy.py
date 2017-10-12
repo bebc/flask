@@ -1,4 +1,5 @@
 from app import app
+from app.models import Application_info
 from flask_uploads import UploadSet, configure_uploads, ALL
 from flask import request,jsonify,session
 from flask import Blueprint
@@ -19,11 +20,16 @@ def upload_file():
 
 @deploy_add.route("/deploy/deploy_app",methods = ['GET','POST'])
 def deploy_app():
+    ip = []
     if request.method == 'POST':
         web_project = request.form.get('web_project')
         deploy_version = request.form.get('deploy_version')
         web_server = request.form.getlist('web_server')
-        result = run_thread(web_server)
+        for app in web_server:
+            server = Application_info.query.filter_by(webserver=app).first()
+            ip.append(server)
+
+        result = run_thread(ip)
 
         return jsonify({"code": 200, "msg": result})
 
