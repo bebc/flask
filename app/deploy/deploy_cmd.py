@@ -1,3 +1,4 @@
+from app import app
 import subprocess
 import threading
 import paramiko
@@ -22,10 +23,15 @@ def cmd(web_project,host,deploy_version):
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(host,timeout=10)
-    run_command(host,cmd_mv)
-    run_command(host,cmd_zip)
-    run_command(host,cmd_kill)
-    run_command(host,cmd_start)
+    mv_info = run_command(host,cmd_mv)
+    zip_info = run_command(host,cmd_zip)
+    kill_info = run_command(host,cmd_kill)
+    start_info = run_command(host,cmd_start)
+    app.logger.info(child)
+    app.logger.info(mv_info)
+    app.logger.info(zip_info)
+    app.logger.info(kill_info)
+    app.logger.info(start_info)
     ssh.close()
 
 def run_thread(hosts):

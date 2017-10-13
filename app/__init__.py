@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate,MigrateCommand
+import logging
 from flask_uploads import UploadSet, configure_uploads, ALL
 #from flask_script import Manager, Shell
 
@@ -14,6 +15,13 @@ migrate = Migrate(app,db)
 lm = LoginManager()
 lm.login_view = "user.login"    #未登录返回页面配置项
 lm.init_app(app)
+
+handler = logging.FileHandler('/data/flask.log', encoding='UTF-8')
+handler.setLevel(logging.DEBUG)
+logging_format = logging.Formatter(
+    '%(asctime)s - %(levelname)s - %(funcName)s - %(message)s')
+handler.setFormatter(logging_format)
+app.logger.addHandler(handler)
 
 from app import views,models
 #import pymysql

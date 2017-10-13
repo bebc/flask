@@ -28,10 +28,9 @@ def deploy_app():
         for app in web_server:
             server = Application_info.query.filter_by(webserver=app).first()
             ip.append(server.ip)
+        result = run_thread(ip)
 
-        #result = run_thread(ip)
-
-        return jsonify({"code": 200, "msg": ip})
+        return jsonify({"code": 200, "msg": result})
 
 
 
