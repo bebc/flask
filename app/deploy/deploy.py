@@ -15,7 +15,6 @@ configure_uploads(app, files)
 def upload_file():
     if request.method == 'POST' and 'war' in request.files:
         filename = files.save(request.files['war'])
-        app.logger.info(filename)
         url = files.url(filename)
     return "upload_file"
 

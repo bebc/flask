@@ -15,19 +15,25 @@ def cmd(web_project,host,deploy_version):
             return (host+':'+stdout.read().decode('utf-8'))
 
     tomcat_path = '/opt/tomcat7'+web_project
-    cmd = 'scp /data/'+web_project+'-web.war '+host+':/webapps/run'
-    cmd_mv = 'cp -rf /webapps/run/'+web_project+' /webapps/runBak/'+web_project+'-web-'+deploy_version
-    cmd_zip = 'unzip -od /webapps/run/'+web_project+' /webapps/run/'+web_project+'-web.war'
+    cmd_mkdir = 'mkdir -p /webapps/upload/'+deploy_version
+    cmd_scp = 'scp /data/files/'+web_project+'-web.war '+host+':/webapps/upload/'+deploy_version
+    cmd_rm = 'rm -rf /data/files/'+web_project+'-web.war'
+    cmd_cp = 'cp -rf /webapps/run/'+web_project+' /webapps/runBak/'+web_project+'-web-'+deploy_version
+    cmd_zip = 'unzip -od /webapps/run/'+web_project+' /webapps/upload/'+deploy_version+'/'+web_project+'-web.war'
     cmd_kill = "ps -ef|grep "+web_project+"|grep -v grep |awk '{print $2}'|xargs kill -9"
     cmd_start = 'source /etc/profile;bash '+tomcat_path+'/bin/startup.sh'
-    app.logger.info(host+":开始传包...")
-    child = subprocess.check_output(cmd,shell='true')
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(host,timeout=10)
-    app.logger.info(child)
+    run_command(host,cmd_mkdir)
+    app.logger.info(host + ":开始传包...")
+    try:
+        child = subprocess.check_output(cmd_scp, shell='true')
+    except Exception as e:
+            return e
+    subprocess.check_output(cmd_rm, shell='true')
     app.logger.info(host+":开始部署...")
-    mv_info = run_command(host,cmd_mv)
+    cp_info = run_command(host,cmd_cp)
     zip_info = run_command(host,cmd_zip)
     kill_info = run_command(host,cmd_kill)
     start_info = run_command(host,cmd_start)
