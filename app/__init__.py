@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate,MigrateCommand
+from flask_socketio import SocketIO
 import logging
 from flask_uploads import UploadSet, configure_uploads, ALL
 #from flask_script import Manager, Shell
@@ -15,6 +16,7 @@ migrate = Migrate(app,db)
 lm = LoginManager()
 lm.login_view = "user.login"    #未登录返回页面配置项
 lm.init_app(app)
+socketio = SocketIO(app)
 
 from app import views,models
 #import pymysql

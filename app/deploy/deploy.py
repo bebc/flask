@@ -1,4 +1,6 @@
 from app import app
+from app import socketio
+from flask_socketio import SocketIO
 from app.models import Application_info
 from flask_uploads import UploadSet, configure_uploads, ALL
 from flask import request,jsonify,session
@@ -26,13 +28,16 @@ def deploy_app():
         web_project = request.form.get('web_project')
         deploy_version = request.form.get('deploy_version')
         web_server = request.form.getlist('web_server')
-        record_log(web_project+'-'+deploy_version+'.log')
+        log = Logging(web_project+'-'+deploy_version+'.log')
+        log.record_log()
         for app in web_server:
             server = Application_info.query.filter_by(webserver=app).first()
             ip.append(server.ip)
         result = run_thread(ip)
+        log.remove_handler()
 
         return jsonify({"code": 200, "msg": result})
+
 
 
 
