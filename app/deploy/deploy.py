@@ -15,9 +15,13 @@ configure_uploads(app, files)
 
 @deploy_add.route("/upload_file",methods = ['GET','POST'])
 def upload_file():
+    log = Initlog('flaskupload.log')
+    log.record_log()
     if request.method == 'POST' and 'war' in request.files:
         filename = files.save(request.files['war'])
+        app.logger.info(filename)
         url = files.url(filename)
+    log.remove_handler()
     return "upload_file"
 
 
@@ -28,7 +32,7 @@ def deploy_app():
         web_project = request.form.get('web_project')
         deploy_version = request.form.get('deploy_version')
         web_server = request.form.getlist('web_server')
-        log = Logging(web_project+'-'+deploy_version+'.log')
+        log = Initlog(web_project+'-'+deploy_version+'.log')
         log.record_log()
         for app in web_server:
             server = Application_info.query.filter_by(webserver=app).first()

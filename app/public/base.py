@@ -1,7 +1,7 @@
 from app import app
 import logging
 
-class Logging:
+class Initlog:
 
     def __init__(self,log_path):
         self.__handler = logging.FileHandler('/data/logs/flask/' + log_path, encoding='UTF-8')
