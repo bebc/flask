@@ -16,13 +16,6 @@ lm = LoginManager()
 lm.login_view = "user.login"    #未登录返回页面配置项
 lm.init_app(app)
 
-handler = logging.FileHandler('/data/flask.log', encoding='UTF-8')
-handler.setLevel(logging.DEBUG)
-logging_format = logging.Formatter(
-    '%(asctime)s - %(levelname)s - %(funcName)s - %(message)s')
-handler.setFormatter(logging_format)
-app.logger.addHandler(handler)
-
 from app import views,models
 #import pymysql
 #pymysql.install_as_MySQLdb()
