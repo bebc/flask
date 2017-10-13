@@ -31,7 +31,6 @@ def cmd(web_project,host,deploy_version):
         child = subprocess.check_output(cmd_scp, shell='true')
     except Exception as e:
             return e
-    subprocess.check_output(cmd_rm, shell='true')
     app.logger.info(host+":开始部署...")
     cp_info = run_command(host,cmd_cp)
     zip_info = run_command(host,cmd_zip)
@@ -39,6 +38,7 @@ def cmd(web_project,host,deploy_version):
     start_info = run_command(host,cmd_start)
     app.logger.info(start_info)
     ssh.close()
+    subprocess.check_output(cmd_rm, shell='true')
 
 def run_thread(hosts):
 
