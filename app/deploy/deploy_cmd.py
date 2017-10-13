@@ -41,10 +41,13 @@ def cmd(web_project,host,deploy_version):
     subprocess.check_output(cmd_rm, shell='true')
 
 def run_thread(hosts):
-
+    jobs= []
     for host in hosts:
         try:
             sthread = threading.Thread(target=cmd, args=('polaris', host, 'test123',))
+            jobs.append(sthread)
             sthread.start()
         except Exception as e:
             return e
+    for proc in jobs:
+            proc.join()
