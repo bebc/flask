@@ -27,7 +27,7 @@ def deploy_app():
         web_project = request.form.get('web_project')
         deploy_version = request.form.get('deploy_version')
         web_server = request.form.getlist('web_server')
-        record_log(web_project+'/'+deploy_version+'.log')
+        record_log(web_project+'-'+deploy_version+'.log')
         for app in web_server:
             server = Application_info.query.filter_by(webserver=app).first()
             ip.append(server.ip)
