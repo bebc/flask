@@ -1,12 +1,13 @@
 from app import app
 from app import socketio
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO,emit,disconnect
 from app.models import Application_info
 from flask_uploads import UploadSet, configure_uploads, ALL
 from flask import request,jsonify,session
 from flask import Blueprint
 from app.deploy.deploy_cmd import *
 from app.public.base import *
+import time
 
 deploy_add = Blueprint('deploy_add',__name__)
 
@@ -33,14 +34,31 @@ def deploy_app():
         deploy_version = request.form.get('deploy_version')
         web_server = request.form.getlist('web_server')
         log = Initlog(web_project+'-'+deploy_version+'.log')
+        global logfile
+        logfile = '/data/logs/flask/'+web_project+'-'+deploy_version+'.log'
         log.record_log()
         for app in web_server:
             server = Application_info.query.filter_by(webserver=app).first()
             ip.append(server.ip)
-        result = run_thread(ip)
+        #运行任务
+        result = run_thread(ip,web_project,deploy_version)
         log.remove_handler()
 
         return jsonify({"code": 200, "msg": result})
+
+@socketio.on('my event',namespace='/msg')
+def test_socket(message):
+    emit('connect', {'log': 10, 'message': message['data']})
+    f = open(logfile)
+    num = 0
+    while (num < 15):
+        data = f.readlines()
+        for log in data:
+            emit('connect',{'log':log,'message':message['data']})
+        num += 1
+        print (num)
+
+    disconnect()
 
 
 

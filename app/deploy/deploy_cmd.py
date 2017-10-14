@@ -40,11 +40,11 @@ def cmd(web_project,host,deploy_version):
     ssh.close()
     subprocess.check_output(cmd_rm, shell='true')
 
-def run_thread(hosts):
+def run_thread(hosts,web_project,deploy_version):
     jobs= []
     for host in hosts:
         try:
-            sthread = threading.Thread(target=cmd, args=('polaris', host, 'test123',))
+            sthread = threading.Thread(target=cmd, args=(web_project, host, deploy_version,))
             jobs.append(sthread)
             sthread.start()
         except Exception as e:

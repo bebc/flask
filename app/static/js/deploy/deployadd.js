@@ -66,4 +66,23 @@ $('#submit').click(function () {
             alert("false");
         }
     });
+
+    setTimeout("websocket()",30000)
 })
+
+//websocket
+function websocket (){
+    var namespace = '/msg'
+    var socket = io.connect('http://192.168.186.128:5000'+namespace);
+    function a(){socket.emit('my event', {data: 'I\'m connected!'})};
+    a()
+    socket.on('connect', function(msg) {
+        if (msg != undefined) {
+            console.log(msg);
+            $('#result').append("<p>"+msg["log"]+"</p>");
+        }
+    })
+}
+
+
+
