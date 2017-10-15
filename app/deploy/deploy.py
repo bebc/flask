@@ -45,7 +45,7 @@ def deploy_app():
             db.session.add(deploy_info)
             db.session.commit()
         except Exception as e:
-            return e
+            return jsonify({"code": 400, "msg": e})
 
         log.record_log()
         for app in web_server:
@@ -62,7 +62,7 @@ def deploy_app():
             update_info.execute_date = datetime.now()
             db.session.commit()
         except Exception as e:
-            return e
+            return jsonify({"code": 400, "msg": e})
 
         return jsonify({"code": 200, "msg": "请等待..."})
 

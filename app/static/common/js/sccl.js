@@ -401,7 +401,7 @@ $(function(){
 				]},
 				{"id":"5","name":"代码发布","parentId":"0","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
 					{"id":"6","name":"正向发布","parentId":"5","url":"deploy_add","icon":"","order":"1","isHeader":"0","childMenus":""},
-					{"id":"7","name":"预留","parentId":"5","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
+					{"id":"7","name":"发布信息","parentId":"5","url":"deploy_info","icon":"","order":"1","isHeader":"0","childMenus":""}
 				]},
 				{"id":"8","name":"Ansible模块","parentId":"0","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
 					{"id":"9","name":"运行模块","parentId":"8","url":"deploy_add","icon":"","order":"1","isHeader":"0","childMenus":""},
