@@ -76,12 +76,13 @@ class Ops_record(db.Model):
 	def __reper_(self):
 		return '<Name %r>' % (self.name)
 
-class deploy_info(db.Model):
+class Deploy_info(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	name = db.Column(db.String(64), index=True, nullable=False)
 	webproject = db.Column(db.String(64), nullable=False)
 	version = db.Column(db.String(64), nullable=False)
-	result = db.Column(db.String(64), nullable=False)
+	result = db.Column(db.String(64))
+	log_file = db.Column(db.String(64), nullable=False)
 	create_date = db.Column(db.DateTime, default=datetime.now())
 	execute_date = db.Column(db.DateTime, default=datetime.now())
 

@@ -19,6 +19,7 @@ $(document).ready(function(){
 
 $('#web_project').change(function(){
     $('#web_server option').remove()
+    $("#result p").remove()
 	$.ajax({
         type: 'GET',
         url: '/api/web_server_select?webproject='+$(this).val(),
@@ -55,6 +56,7 @@ $('#submit').click(function () {
         $("#deploy_version_error").html("* 版本号必须填写");
         return false;
     }
+
     $.ajax({
         type: 'POST',
         url: '/deploy/deploy_app',
