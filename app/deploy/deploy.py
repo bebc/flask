@@ -1,5 +1,5 @@
-from app import app
-from app import socketio,db
+from app import *
+#from app import socketio,db
 from flask_socketio import SocketIO,emit,disconnect
 from app.models import Deploy_info,Application_info
 from flask_uploads import UploadSet, configure_uploads, ALL
@@ -9,11 +9,13 @@ from flask import session
 from app.deploy.deploy_cmd import *
 from app.public.base import *
 from datetime import datetime
+import requests
 
 deploy_add = Blueprint('deploy_add',__name__)
 
 files = UploadSet('files', ALL)
 configure_uploads(app, files)
+celery = make_celery(app)
 
 @deploy_add.route("/upload_file",methods = ['GET','POST'])
 def upload_file():
@@ -81,6 +83,59 @@ def return_deploy_log(message):
 
     disconnect()
 
+
+@deploy_add.route("/deploy/deploy_cron",methods = ['POST'])
+def deploy_cron():
+    web_project = request.form.get('web_project')
+    deploy_version = request.form.get('deploy_version')
+    web_server = request.form.getlist('web_server')
+    try:
+        cron.apply_async(args=(web_project,deploy_version, web_server),countdown=5)
+    except Exception as e:
+        return jsonify({"code": 400, "msg": e})
+    return jsonify({"code": 200, "msg": "提交成功"})
+
+@celery.task
+def cron(web_project,deploy_version, web_server):
+    ip = []
+    log = Initlog(web_project + '-' + deploy_version + '.log')
+
+    # 定义文件名全局变量后续websocket读取文件会调用
+    global logfile
+    logfile = '/data/logs/flask/' + web_project + '-' + deploy_version + '.log'
+    log.record_log()
+    for app in web_server:
+        server = Application_info.query.filter_by(webserver=app).first()
+        ip.append(server.ip)
+    result = run_thread(ip, web_project, deploy_version)
+    log.remove_handler()
+    # 信息入库
+    '''
+    try:
+        deploy_info = Deploy_info(webproject=web_project, version=deploy_version, log_file=logfile,
+                                  result=201)
+        db.session.add(deploy_info)
+        db.session.commit()
+    except Exception as e:
+        return jsonify({"code": 400, "msg": e})
+
+    log.record_log()
+    for app in web_server:
+        server = Application_info.query.filter_by(webserver=app).first()
+        ip.append(server.ip)
+    # 运行任务
+    result = run_thread(ip, web_project, deploy_version)
+    log.remove_handler()
+
+    # 更新入库信息和结果
+    try:
+        update_info = Deploy_info.query.filter_by(webproject=web_project, version=deploy_version).first()
+        update_info.result = 200
+        update_info.execute_date = datetime.now()
+        db.session.commit()
+    except Exception as e:
+        return jsonify({"code": 400, "msg": e})
+        '''
 
 
 

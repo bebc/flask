@@ -35,6 +35,17 @@
                         <form id="deployadd" class="main form-horizontal">
                             <fieldset>
                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">发布类型</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="release_type" id="release_type">
+                                            <option>即时发布</option>
+                                            <option>定时发布</option>
+                                        </select>
+                                        <span id="web_project_error"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label class="col-sm-2 control-label">发布项目</label>
                                     <div class="col-sm-6">
                                         <select class="form-control" name="web_project" id="web_project">
@@ -59,6 +70,7 @@
                                         <span id="deploy_version_error"></span>
                                     </div>
                                 </div>
+                                <div class="cron"></div>
                                 <div class="form-group" id="fileQueue">
                                     <div class="col-sm-2" >
                                         <input class="form-control" type="file" name="uploadify" id="uploadify"/>
@@ -72,6 +84,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label"></label>
                                     <button id = "submit" type="button" class="btn btn-default">执行</button>
+                                    <button id = "cron" type="button" class="btn btn-default">提交</button>
                                 </div>
 
                             </fieldset>
@@ -114,6 +127,17 @@
             alert('上传成功！')
         }
     });
+
+    $('#release_type').change(function(){
+        if ($(this).val() == "定时发布"){
+            $('.cron').append("<div class='control-group'><label class='col-sm-2 control-label'>发布时间</label><div class='col-sm-6'><input class='form-control' type='datetime-local' name='release_time' id='release_time'><span id='release_time_error'></span></div></div>")
+        }
+        else if ($(this).val() != "定时发布"){
+            $('.control-group').remove()
+            $('.cron label').remove()
+            $('.cron span').remove()
+	    }
+    })
 </script>
 
 <script type="text/javascript" src="/static/js/deploy/deployadd.js"></script>

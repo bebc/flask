@@ -1,6 +1,7 @@
 from app import app
 import logging
 
+#日志类
 class Initlog:
 
     def __init__(self,log_path):

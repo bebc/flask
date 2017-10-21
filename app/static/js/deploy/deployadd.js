@@ -75,6 +75,8 @@ $('#submit').click(function () {
 //websocket
 function websocket (){
     var namespace = '/msg'
+    //预发地址
+    //var socket = io.connect('http://10.200.14.10:5000'+namespace);
     var socket = io.connect('http://192.168.186.128:5000'+namespace);
     function a(){socket.emit('my event', {data: 'I\'m connected!'})};
     a()
@@ -86,5 +88,40 @@ function websocket (){
     })
 }
 
+//定时任务提交
+$('#cron').click(function () {
+    var params = $('#deployadd').serialize();
+    /*console.log($('#web_project').val());
+    console.log($('#web_server').val());
+    console.log($('#deploy_version').val());*/
+    var web_projetc = $('#web_project').val();
+    var web_server = $('#web_server').val();
+    var deploy_version = $('#deploy_version').val();
+    if (web_projetc == null) {
+        $("#web_project_error").html("* 发布项目必须填写");
+        return false;
+    }
+    else if (web_server == null) {
+        $("#web_server_error").html("* 部署目标必须填写");
+        return false;
+    }
+    else if (deploy_version == '') {
+        $("#deploy_version_error").html("* 版本号必须填写");
+        return false;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/deploy/deploy_cron',
+        data: params,
+        success: function(result){
+            $("#result").append("<p>"+result["msg"]+"</p>");
+        },
+        error: function(){
+            alert("false");
+        }
+    });
+
+})
 
 

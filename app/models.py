@@ -78,7 +78,7 @@ class Ops_record(db.Model):
 
 class Deploy_info(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	name = db.Column(db.String(64), index=True, nullable=False)
+	name = db.Column(db.String(64), index=True)
 	webproject = db.Column(db.String(64), nullable=False)
 	version = db.Column(db.String(64), nullable=False)
 	result = db.Column(db.String(64))
