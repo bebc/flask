@@ -37,6 +37,7 @@ $('#web_project').change(function(){
 });
 
 $('#submit').click(function () {
+    $("#result p").remove()
     var params = $('#deployadd').serialize();
     /*console.log($('#web_project').val());
     console.log($('#web_server').val());
