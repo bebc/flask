@@ -3,9 +3,11 @@ from app import db
 from app.models import Application_info
 from flask import request,jsonify
 from flask import Blueprint
+from app.public.record import OpsRecord
 
 appinfo = Blueprint('appinfo',__name__)
 
+opsrecord = OpsRecord()
 @appinfo.route("/api/appinfo",methods = ['GET','POST'])
 def Appinfo():
 	getwebproject = str(request.args.get('webproject'))
@@ -73,6 +75,7 @@ def appadd():
 				addappinfo = Application_info(ip=addip,webproject=addappproject,webserver=addappwebserver)
 				db.session.add(addappinfo)
 				db.session.commit()
+				opsrecord.asset_record("add_project", "asset-app")
 				return "appaddsuccess"
 			except:
 				return "appaddfail"
@@ -90,6 +93,7 @@ def appdel():
 				delapp = Application_info.query.filter_by(ip=data["ip"],webproject=data["webproject"],webserver=data["webserver"]).first()
 				db.session.delete(delapp)
 				db.session.commit()
+				opsrecord.asset_record("del_project", "asset-app")
 			except:
 				return "delfail"
 		

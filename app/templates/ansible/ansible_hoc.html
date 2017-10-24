@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="keywords" content="scclui框架">
+    <meta name="description" content="scclui为轻量级的网站后台管理系统模版。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-table.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-select.css" rel="stylesheet">
+    <link href="/static/css/uploadify.css" rel="stylesheet">
+    <script type="text/javascript" src="/static/js/basic/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/basic/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/basic/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/static/js/basic/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="/static/js/basic/bootstrap-select.js"></script>
+    <title>基础信息</title>
+
+</head>
+
+<body>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <legend><i class="fa  fa-paper-plane"></i>Ansible服务器</legend>
+                        <form id="ansible_hoc" class="main form-horizontal">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">主机类型</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="host_type" id="host_type">
+                                            <option value="ip地址">ip地址</option>
+                                            <option value="机组">机组</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="ip_addr_form">
+                                    <label class="col-sm-2 control-label">ip地址</label>
+                                    <div class="col-sm-6">
+                                        <select class="selectpicker show-tick form-control" name="ip_addr" id="ip_addr" multiple>
+                                       </select>
+                                   </div>
+                                </div>
+
+                                <div class="form-group" id="mach_group_form" style="display: none">
+                                    <label class="col-sm-2 control-label">机组</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="mach_group" id="mach_group">
+                                       </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">模块类型</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="mod_type" id="mod_type">
+                                            <option>ping</option>
+                                            <option>shell</option>
+                                            <option>copy</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">模块参数</label>
+                                    <div class="col-sm-6">
+                                        <input id="mod_param" class="form-control" name="mod_param" value="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"></label>
+                                    <button id = "submit" type="button" class="btn btn-default">提交</button>
+                                </div>
+
+                            </fieldset>
+                        </form>
+
+                    </div>
+                    <!-- /.col-lg-6 (nested) -->
+                    <div class="col-lg-6">
+                        <legend><i class="fa  fa-paper-plane-o"></i>执行结果</legend>
+                        <pre>
+                    <div id="result">
+                    </div>
+                </pre>
+                        <!-- /.col-lg-6 (nested) -->
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+</div>
+
+<script text="text/javascript">
+    $('#host_type').change(function () {
+        if ($(this).val() == "ip地址"){
+            $('#mach_group_form').hide();
+            $('#ip_addr_form').show()
+
+        }
+        else if ($(this).val() == "机组"){
+            $('#ip_addr_form').hide();
+            $('#mach_group_form').show();
+        }
+
+    })
+
+
+</script>
+
+<script type="text/javascript" src="/static/js/ansible/ansible_hoc.js"></script>
+</body>
+
+</html>

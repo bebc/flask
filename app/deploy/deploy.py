@@ -104,6 +104,7 @@ def cron(web_project,deploy_version, web_server):
     global logfile
     logfile = '/data/logs/flask/' + web_project + '-' + deploy_version + '.log'
     log.record_log()
+    '''
     for app in web_server:
         server = Application_info.query.filter_by(webserver=app).first()
         ip.append(server.ip)
@@ -119,7 +120,6 @@ def cron(web_project,deploy_version, web_server):
     except Exception as e:
         return jsonify({"code": 400, "msg": e})
 
-    log.record_log()
     for app in web_server:
         server = Application_info.query.filter_by(webserver=app).first()
         ip.append(server.ip)
@@ -135,7 +135,7 @@ def cron(web_project,deploy_version, web_server):
         db.session.commit()
     except Exception as e:
         return jsonify({"code": 400, "msg": e})
-        '''
+
 
 
 

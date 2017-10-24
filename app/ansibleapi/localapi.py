@@ -44,6 +44,19 @@ class Ansible_hoc_api:
 		facts_output = dic_output["ansible_facts"]
 		return facts_output
 
+	def run_command(self,host,module,command):
+		results_callback = Ansible_hoc_api.ResultCallback()
+		play_source = {"name": "Ansible Ad-Hoc", "hosts": host, "gather_facts": "no",
+					   "tasks": [{"action": {"module": module, "args": command}}]}
+		play = Play().load(play_source, variable_manager=self.__variable_manager, loader=self.__loader)
+		tqm = None
+		tqm = TaskQueueManager(inventory=self.__inventory, variable_manager=self.__variable_manager,
+							   loader=self.__loader, options=self.__options, passwords=self.__passwords, run_tree=False,
+							   stdout_callback=results_callback, )
+		result = tqm.run(play)
+		output = json.loads(results_callback.data)
+		return output
+
 def infodetail(gethost_list,gethost,getmodule,getcommand):
 	command = Ansible_hoc_api(gethost_list)
 	information = command.run(gethost,getmodule,getcommand)
@@ -56,6 +69,8 @@ def infodetail(gethost_list,gethost,getmodule,getcommand):
 	#lsb = information["ansible_lsb"]["description"]
 	get_value = [{"dns":dns,"cpu":cpu,"processor":processor,"ip":ip,"hostname":hostname,"memory":memory,"lsb":"CentOS release 6.9 (Final)"}]
 	return get_value
+
+
 
 #print (isinstance('Ansible_hoc_api', Iterable))
 #infodetail("/etc/ansible/hosts","test","setup","")

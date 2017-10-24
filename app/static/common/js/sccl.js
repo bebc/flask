@@ -404,11 +404,11 @@ $(function(){
 					{"id":"7","name":"发布信息","parentId":"5","url":"deploy_info","icon":"","order":"1","isHeader":"0","childMenus":""}
 				]},
 				{"id":"8","name":"Ansible模块","parentId":"0","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
-					{"id":"9","name":"运行模块","parentId":"8","url":"deploy_add","icon":"","order":"1","isHeader":"0","childMenus":""},
+					{"id":"9","name":"运行模块","parentId":"8","url":"ansible_hoc","icon":"","order":"1","isHeader":"0","childMenus":""},
 					{"id":"10","name":"剧本模块","parentId":"8","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
 				]},
 				{"id":"11","name":"计划任务","parentId":"0","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
-					{"id":"12","name":"添加任务","parentId":"11","url":"deploy_add","icon":"","order":"1","isHeader":"0","childMenus":""},
+					{"id":"12","name":"添加任务","parentId":"11","url":"","icon":"","order":"1","isHeader":"0","childMenus":""},
 					{"id":"13","name":"任务列表","parentId":"11","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
 				]},
 				{"id":"14","name":"操作日志","parentId":"0","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
@@ -416,7 +416,7 @@ $(function(){
 					{"id":"16","name":"预留","parentId":"14","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
 				]},
 				{"id":"17","name":"用户中心","parentId":"0","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
-					{"id":"18","name":"用户管理","parentId":"17","url":"deploy_add","icon":"","order":"1","isHeader":"0","childMenus":""},
+					{"id":"18","name":"用户管理","parentId":"17","url":"","icon":"","order":"1","isHeader":"0","childMenus":""},
 					{"id":"19","name":"用户配置","parentId":"17","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
 				]},
 				];

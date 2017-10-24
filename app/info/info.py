@@ -25,6 +25,18 @@ def sysinfo():
 	#return jsonify({"total":syscount,"infolist":infolist}) 服务端分页返回格式
 	return jsonify(infolist)
 
+#ip查询
+@info.route("/api/ip_info",methods = ['GET','POST'])
+def ip_info():
+	ip_list = []
+	try:
+		ip_all = models.Sys_info.query.with_entities(models.Sys_info.ip).distinct().all()
+		for ip in ip_all:
+			ip_list.append(str(ip)[2:-3])
+		return jsonify(ip_list)
+	except Exception as e:
+		return e
+
 @info.route("/api/addinfo",methods = ['GET','POST'])
 def sysadd():
 	if request.method == 'POST':
@@ -44,7 +56,7 @@ def sysadd():
 				db.session.add(addinfo)
 				db.session.add(addapplicationinfo)
 				db.session.commit()
-				opsrecord.asset_record("addtomcat", "asset")
+				opsrecord.asset_record("addtomcat", "asset-base")
 				return "addsuccess"
 			except:
 				return "fail"
@@ -53,7 +65,7 @@ def sysadd():
 				addinfo = models.Sys_info(ip=addip,sys=addsys,application=addapplication,webserver=addwebserver)
 				db.session.add(addinfo)
 				db.session.commit()
-				opsrecord.asset_record("add","asset")
+				opsrecord.asset_record("add","asset-base")
 				return "addsuccess"
 			#except:
 				#return "fail"
@@ -77,7 +89,7 @@ def sysdel():
 					db.session.delete(deldata)
 					models.Application_info.query.filter_by(ip=data["ip"],webserver=data["webserver"]).delete()
 					db.session.commit()
-					opsrecord.asset_record("deltomcat", "asset")
+					opsrecord.asset_record("deltomcat", "asset-base")
 				except:
 					return "delfail"
 			else:
@@ -85,7 +97,7 @@ def sysdel():
 					deldata = models.Sys_info.query.filter_by(id=data["id"],ip=data["ip"],sys=data["sys"],application=data["application"],webserver=data["webserver"]).first()
 					db.session.delete(deldata)
 					db.session.commit()
-					opsrecord.asset_record("del", "asset")
+					opsrecord.asset_record("del", "asset-base")
 				except:
 					return "delfail"
 

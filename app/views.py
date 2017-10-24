@@ -55,6 +55,11 @@ def home():
 def deploy_add():
 	return render_template("/deploy/deploy_add.html")
 
+@app.route("/ansible_hoc")
+@login_required
+def ansible_hoc():
+	return render_template("/ansible/ansible_hoc.html")
+
 @app.route('/api/tasks')
 def gettasks():
 	tasks = [
